@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { getHeroImage } from '../utils/heroImages'
 // Images import गर्ने - deployment को लागि src folder मा राखिएको
 import headerImage from '../assets/images/image.png'
 import backgroundImage from '../assets/images/image-copy.png'
 
 const ChhandaGyan = () => {
+  const location = useLocation()
+  const heroImage = getHeroImage(location.pathname)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -24,294 +28,245 @@ const ChhandaGyan = () => {
   return (
     <div className="min-h-screen py-20">
       <div className="container mx-auto px-4">
-        {/* Header Section - पृष्ठको मुख्य शीर्षक */}
+        {/* Header Section with Dynamic Hero Image */}
         <div className="text-center mb-16">
           <div className="mb-8">
-            <img
-              src={headerImage}
-              alt="Chhanda-Gyan Heading"
-              className="w-full max-w-5xl mx-auto rounded-lg shadow-2xl mb-6 object-contain"
-              onError={(e) => {
-                e.target.style.display = 'none'
-              }}
-            />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl max-w-5xl mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-b from-saffron-900/70 via-saffron-700/60 to-sandalwood-800/70 z-10"></div>
+              <img
+                src={heroImage}
+                alt="Chhanda-Gyan Heading"
+                className="w-full h-[300px] sm:h-[400px] object-cover"
+                onError={(e) => {
+                  e.target.src = headerImage
+                  e.target.onerror = () => {
+                    e.target.style.display = 'none'
+                  }
+                }}
+              />
+              <div className="absolute inset-0 z-20 flex items-center justify-center">
+                <div className="text-center text-white px-4">
+                  <h1 className="section-title mb-4 font-devanagari text-white drop-shadow-2xl">छन्दशास्त्र र नेपाली छन्दकविता परम्परा</h1>
+                  <p className="text-xl sm:text-2xl font-devanagari mb-2 drop-shadow-lg">प्रा.डा. देवी नेपाल</p>
+                  <div className="w-32 h-1 bg-white rounded-full mx-auto mt-4"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <h1 className="section-title mb-6 font-devanagari">छन्द-ज्ञान</h1>
-          <p className="section-subtitle font-devanagari">
-            
-          </p>
           <div className="sanskrit-divider"></div>
         </div>
 
-
-
-        {/* Comprehensive Chhanda Information - छन्दको विस्तृत जानकारी section */}
-        <div className="mt-16 space-y-8">
-          {/* Main Introduction Card - मुख्य परिचय card */}
-          <div className="card bg-gradient-to-br from-saffron-50 to-sandalwood-50 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-1/3 h-full opacity-10">
-              <img
-                src={backgroundImage}
-                alt="Background"
-                className="w-full h-full object-contain"
-                loading="lazy"
-                onError={(e) => {
-                  e.target.style.display = 'none'
-                }}
-              />
+        {/* Main Content */}
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* लेखसार */}
+          <section className="card bg-gradient-to-br from-saffron-50 to-sandalwood-50">
+            <h2 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">लेखसार</h2>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>यस लेखमा संस्कृत साहित्य परम्परामा छन्दकवितासम्बन्धी सिद्धान्तको सामान्य चित्राङ्कन गरी नेपाली कविता परम्परामा संस्कृत छन्दको प्रभावलाई प्रस्तुत गरिएको छ । छन्द शब्दको व्युत्पत्ति, संस्कृत भाषा साहित्यमा छन्दको उत्पत्ति, विकास, छन्दका प्रकार, छन्दसूत्रको व्याख्या र गणको निर्धारण आदि सम्बन्धी सैद्धान्तिक पक्ष र संस्कृत तथा नेपालीमा छन्दसम्बन्धी कृतिहरूको सङ्ख्यात्मक विविधताजस्ता कुराहरूका बारेमा यहाँ सङ्क्षेपमा प्रकाश पारिएको छ ।</p>
+              <p>यसरी नै नेपाली कविता परम्परामा संस्कृत छन्दको प्रभाव र प्रयोगको खोजी गर्ने क्रममा नेपाली भूमिमा छन्दको प्रवेश, लिच्छवी कालीन अभिलेखमा र नेपाल भाषाका कवितामा छन्दको उपस्थितिका साथै नेपाली साहित्यमा छन्दको प्रयोगसम्बन्धी कालक्रमिक सर्वेक्षण गरिएको छ । यस क्रममा प्रवर्तन काल, विकास काल, उत्कर्ष काल, सङ्क्रमण काल र पुनर्जागरण कालजस्ता जम्मा पाँच चरणमा विभाजन गरी नेपालीमा संस्कृतका शास्त्रीय छन्द प्रयोगको परम्परालाई प्रवृत्तिगत विश्लेषणसहित केलाइएको छ ।</p>
+              <p>अन्त्यमा नेपाली छन्दकविताका क्षेत्रमा पुनर्जागरण कालमा कविताका बृहत्, मध्यम र लघु रूप आदि सबैमा भएको प्रगति र विकासको उत्साहजनक स्वरूप प्रस्तुत गरी सङ्ख्यात्मक, गुणात्मक र युगीन महत्त्वका दृष्टिले नेपाली छन्दकविताको उपस्थिति नेतृत्वदायी भए पनि यसको विश्वव्यापीकरणका लागि हुनुपर्ने प्रयासहरूका बारेमा सङ्केत गरिएको छ । साथै वर्तमान विश्वसाहित्यमा संस्कृतका शास्त्रीय छन्दहरूको प्रयोग परम्परालाई नेपाली साहित्यले मात्र धानिरहेको छ र संस्कृत भाषापछि नेपाली भाषा मात्र त्यस्तो भाषा हो जसमा संस्कृतका जस्तासुकै जटिल छन्दमा पनि कविता सिर्जना गर्न सकिन्छ भन्ने निष्कर्षका साथ यस तथ्यलाई गिनिज बुक अफ वल्र्ड रेकर्डमा पनि समावेश गर्ने प्रयास हुनुपर्छ भन्ने निष्कर्ष निकालिएको छ ।</p>
             </div>
-            <div className="relative z-10">
-              <h2 className="text-3xl font-bold text-saffron-700 mb-6 text-center font-devanagari">
-                छन्द शास्त्रीय काव्यको महत्त्वपूर्ण आधार
-              </h2>
+          </section>
+
+          {/* १. विषय परिचय */}
+          <section className="card">
+            <h2 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">१. विषय परिचय</h2>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>कविको कृतिलाई काव्य भनिन्छ । काव्य दुई किसिमका हुन्छन्– गद्यकाव्य र पद्यकाव्य । लयगत एकरूपता वा छन्दगत मर्यादामा नबाँधिएका तर काव्यात्मक ललित शब्दयुक्त रचनालाई 'गद्यकाव्य' भनिन्छ भने नियमित लयबद्ध कवितात्मक रचनालाई 'पद्यकाव्य' भनिन्छ । 'पद्यकाव्य' नै 'छन्दकाव्य' हो । छन्दलाई 'वृत्त' पनि भनिन्छ । त्यही छन्दोबद्ध, लयबद्ध वा वृत्तमय काव्य नै 'पद्यकाव्य' हो । छन्दोबद्ध पदं पद्यम् (विश्वनाथ, सन् १९८८ : ११४) भनाइले पनि उक्त कुराकै पुष्टि गरेको छ ।</p>
+              <p>सामान्यतः पद्य, छन्द वा लय भन्नु एउटै हो । 'छन्द' भनेको कविताको लय नै हो । यो बद्ध र मुक्त गरी मूलतः दुई प्रकारको हुन्छ । शास्त्रीय वार्णिक, मात्रिक, लोक छन्द र बहर (गजलको फारसी लय) आदि बद्ध छन्द हुन् भने गद्य कवितामा प्रयोग हुने आन्तरिक लय मुक्त छन्द हो । यति हुँदाहुँदै पनि परम्परागत रूपमा छन्द भन्नासाथ कविताको एउटै लयविधानलाई वा शास्त्रीय पिङ्गल छन्दअन्तर्गतको वार्णिक छन्दलाई मात्र बुझ्ने प्रचलन छ ।</p>
+            </div>
+          </section>
+
+          {/* १.१. छन्द शब्दको व्युत्पत्ति */}
+          <section className="card">
+            <h3 className="text-xl font-bold text-saffron-700 mb-4 font-devanagari">१.१. छन्द शब्दको व्युत्पत्ति</h3>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>वाचस्पत्यम् संस्कृत शब्दकोशका अनुसार 'छदि संवरणे' धातुमा 'इयसुन्' प्रत्यय लागेर 'छन्दस्' शब्दको निर्माण हुन्छ र यसको अर्थ हुन्छ– 'आकाशले जस्तै सबैतिर ढाक्नु' । यस व्युत्पत्तिका आधारमा 'छन्दस्' शब्द हलन्त हो । 'छन्दांसि जज्ञिरे' वेदमा उल्लिखित यस वाक्यले 'छन्दस्' शब्दकै पुष्टि गरेको छ । 'छदि आह्लादने' धातुमा 'अच्' प्रत्यय लागेर 'छन्द' शब्दको निर्माण हुने अर्को मान्यता पनि पाइन्छ । यस व्युत्पत्तिका आधारमा चाहिँ 'छन्द' शब्द अजन्त हो । 'मूर्खः छन्दानुवृत्या च' यस भनाइले छन्दलाई अजन्त शब्दका रूपमा मान्यता प्रदान गरेको छ । अजन्त छन्द शब्दको अर्थ हो, 'आनन्द दिनु' ।</p>
+              <p>व्यावहारिक रूपमा हेर्दा यसका लागि पहिलोभन्दा दोस्रो अर्थ नै उपयुक्त देखिन्छ । बालकदेखि वृद्धसम्मलाई लयका तरङ्गमा लट्ठ पार्ने छन्दको शक्तिलाई हेर्दा र यसको साङ्गीतिक झङ्कारले पशुप्राणीदेखि चराचुरुङ्गीसम्मलाई पनि लोभ्याएको देख्दा चाहिँ यसको दोस्रो अर्थ नै शक्तिशाली भएजस्तो लाग्छ । चाहे जे भए पनि संस्कृत साहित्य परम्परामा चाहिँ यी दुवै अर्थको प्रयोग बराबरजस्तो देखिन्छ ।</p>
+              <p>नेपाली लोकजीवनमा पनि 'छन्द न बन्दको कुरा' वा 'छन्द न बन्दको मान्छे' भन्ने चलन छ । यसले नियम सङ्गत नभएको, लय नमिलेको वा गति, यति एवं सन्दर्भसँग नजोडिएको भन्ने अर्थ दिइरहेको छ । यसका आधारमा हेर्दा पनि छन्द शब्दले अनुशासन र आनन्द दुवै कुराको अपेक्षा गरेको पाइन्छ (नेपाल, २०७३ : २३) । छन्दले सिर्जनामा अनुशासनको अपेक्षा गर्दछ भने भावविधान र वाचनमा आनन्दको अपेक्षा गर्दछ ।</p>
+            </div>
+          </section>
+
+          {/* १.२. छन्दको उत्पत्ति र विकास */}
+          <section className="card">
+            <h3 className="text-xl font-bold text-saffron-700 mb-4 font-devanagari">१.२. छन्दको उत्पत्ति र विकास</h3>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>शिक्षा, कल्प, व्याकरण, निरुक्त, छन्द र ज्योतिष यी छ वेदका अङ्ग मानिन्छन् । पाणिनिले 'छन्दः पादौ तु वेदस्य' लेखेबाट पनि छन्दको सम्बन्ध वेदसँग जोडिएको थाहा हुन्छ । वेदमा गायत्री, त्रिष्टुप्, जगति, पङ्क्ति, अनुष्टुप्, बृहति, उष्णिक् आदि छन्दको चर्चा पाइन्छ । वेदलाई अलौकिक सिर्जना मान्नेहरूले छन्दको उत्पत्तिलाई पनि अलौकिकतासँग जोडेका छन् । छन्दको प्रत्यक्ष सम्बन्ध सङ्गीतसँग जोडिएको छ । सङ्गीतको उत्पत्ति सामवेदबाट भएको हो । त्यसैले सङ्गीत र छन्द समकालीन हुन् र यी दुईको उद्गमस्थल वेद नै हो भन्न सकिन्छ ।</p>
+              <p>रामानुजाचार्यका गुरु एघारौँ शताब्दीका यादवप्रकाशले पिङ्गलसूत्रको टीका लेख्ने क्रममा छन्दको अलौकिकतालाई पुष्टि गर्नका लागि गुरुशिष्य परम्पराको यस्तो शृङ्खला प्रस्तुत गरेका छन्– "छन्दको ज्ञान सर्वप्रथम भगवान् शिवलाई भएको हो । यसपछि क्रमशः शिवबाट विष्णुले, विष्णुबाट इन्द्रले, इन्द्रबाट बृहस्पतिले, बृहस्पतिबाट माण्डव्यले, माण्डव्यबाट सैतवले, सैतवबाट यास्कले र यास्कबाट पिङ्गलले छन्दको ज्ञान प्राप्त गरेका हुन् (पन्त, २०५५ : २०३) ।"</p>
+              <p>एकदिन महर्षि वाल्मीकि आफ्ना शिष्यहरूका साथमा तमसा नदीमा स्नान गरेर घर फर्किँदै गर्दा बाटामा अचानक प्रेमालापमा मग्न क्रोञ्च दम्पती (कर्याङकुरुङका जोडी) मध्ये एकलाई एउटा व्याधाले वाण हानेर मारिदियो । आफ्नो भाले मरेपछिको पोथीको चीत्कारले वाल्मीकिलाई समेत विह्वल बनायो । त्यसैै बेला करुण रसमा डुबेका वाल्मीकिका मुखबाट अचानक यस्तो श्लोक निस्कियो :</p>
+              <div className="bg-saffron-100 p-4 rounded-lg my-4">
+                <p className="text-saffron-900 font-devanagari font-semibold italic text-center">
+                  मा निषाद ! प्रतिष्ठात्वमगमः शाश्वतीः समाः<br/>
+                  यत्क्रौञ्चमिथुनादेकमवधीः काममोहितम् ।
+                </p>
+              </div>
+              <p>यो कुरा सुनेपछि तत्काल ब्रह्माजी प्रकट हुनुभयो र महर्षि वाल्मीकिलाई वागाधिष्ठात्री सरस्वतीका अनुकम्पाले मुखबाट त्यस्तो छन्दोबद्ध वाणीको उच्चारण भएको र अब छन्दोबद्ध ग्रन्थको निर्माणमा लाग्नुपर्ने शुभाशीर्वाद दिनुभयो । लौकिक साहित्यमा यसै श्लोकलाई पहिलो छन्दोबद्ध रचना मानिन्छ ।</p>
+            </div>
+          </section>
+
+          {/* १.३. नेपाली कवितामा प्रयुक्त छन्दका प्रकार */}
+          <section className="card">
+            <h3 className="text-xl font-bold text-saffron-700 mb-4 font-devanagari">१.३. नेपाली कवितामा प्रयुक्त छन्दका प्रकार</h3>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>विविध भाषा र साहित्यका क्षेत्रमा हेर्दा छन्दका अनेकौँ प्रकारहरू फेला पर्दछन् तर नेपाली कविता, गीत र गजलहरूमा प्रयुक्त छन्दहरूलाई हेर्ने हो भने नेपालीमा वार्णिक, मात्रिक, लोक, मुक्त र बहर गरी जम्मा पाँच प्रकारका छन्दहरूको प्रयोग पाइन्छ ।</p>
               
-              <div className="space-y-6 text-parchment-700 font-devanagari leading-relaxed text-lg">
-                <p>
-                  छन्द शास्त्रीय काव्यको महत्त्वपूर्ण आधार हो। यसको प्रयोगले काव्यलाई प्रभावकारी, 
-                  स्तरीय र पाठकलाई सहजै स्पर्श गर्ने हुनाले परम्परादेखि नै हाम्रो पूर्वीय साहित्य-काव्यमा 
-                  छन्दको महत्त्व प्रमुख रूपमा रही आएको छ। छन्द भनेको कविताको 'लय' हो तापनि परम्परागत 
-                  रूपमा छन्दले कविताका सबै किसिमको लयलाई नसमेटेर शास्त्रीय नियमअनुसार गण-मात्राको 
-                  व्यवस्था गरी भावना अभिव्यक्त गर्ने कविताको लयलाई मात्र बुझाउँछ।
-                </p>
+              <div className="space-y-4 mt-4">
+                <div>
+                  <p className="font-semibold mb-2">क) वार्णिक छन्द :</p>
+                  <p>वर्णका आधारमा गणको निर्धारण गरिने छन्दहरूलाई वार्णिक छन्द भनिन्छ । वर्ण र मात्रा दुवैलाई एकै ठाउँमा जोडेर यसलाई वर्णमात्रिक छन्द पनि भनेको पाइन्छ । संस्कृत साहित्यमा यस्ता खाले छन्दहरूको व्यापक प्रयोग पाइन्छ । यिनका निश्चित गण र सूत्रहरू हुन्छन् । आचार्य पिङ्गललले ३५० भन्दा बढी मूल र तिनका भेद उपभेद गरी वार्णिक छन्दहरूको सङ्ख्या अनगिन्ती देखाएका छन् । शार्दूलविक्रीडित, मन्दाक्रान्ता, शिखरिणी, वसन्ततिलका, स्वागता, उपजाति आदि छन्दहरू यसैअन्तर्गत पर्दछन् ।</p>
+                </div>
                 
-                <p>
-                  छन्दलाई 'वृत्त' पनि भनिन्छ। छन्दले कवितामा श्रुतिमधुर्य सिर्जना गरी श्रोतालाई सन्तुष्टि 
-                  वा आनन्द दिन्छ। अङ्ग्रेजीमा छन्दलाई 'मापक' अर्थात् 'Meter' भनिन्छ भने ल्याटिनमा हलोले 
-                  जोतेको कलात्मक सियोतर्फ सङ्केत गर्दै 'हुवर्सस' भनिएको पाइन्छ।
-                </p>
+                <div>
+                  <p className="font-semibold mb-2">ख) मात्रिक छन्द :</p>
+                  <p>मात्राको गणना गरिने सबै छन्दहरूलाई 'मात्रिक छन्द' भनिन्छ । यसमा ह्रस्व अक्षरलाई एक मात्रा (१) र दीर्घ अक्षरलाई दुई मात्रा (२) गणना गरिन्छ । मात्रिक छन्दका पनि चार पाउ हुन्छन् । चारै पाउमा बराबर मात्रा हुनेलाई 'सम मात्रिक', कुनै दुई पाउमा एक खाले र बाँकी दुई पाउमा अर्को खाले मात्रा हुनेलाई 'अद्र्धसम मात्रिक' र चार पाउमा छुट्टाछुट्टै मात्रा हुनेलाई 'विषम मात्रिक' छन्द भनिन्छ ।</p>
+                </div>
                 
-                <p className="font-semibold text-saffron-800">
-                  छन्द वेदको अर्को नाम हो। वर्णहरू र मात्राहरूको गेय व्यवस्थालाई छन्द भनिन्छ। 
-                  कल्प, शिक्षा, निरुक्त, छन्द र ज्योतिषशास्त्रलाई वेदको अङ्ग मानिन्छ। पाणिनिको व्याकरणमा 
-                  'छन्द: पादौ तु वेदस्य' भनी छन्दलाई वेदको पाउ वा गति, गतिवाहक वस्तु वा तत्त्वका 
-                  रूपमा हेरिएको छ।
-                </p>
+                <div>
+                  <p className="font-semibold mb-2">ग) लोकछन्द :</p>
+                  <p>नेपाली लोकजीवनमा प्रचलित अनेकौँ लोकगीतका लयलाई 'लोकछन्द' भनिन्छ । यिनमा वार्णिक वा मात्रिक छन्दमा जस्तो कडा अनुशासन लागु हुँदैन । उच्चारणगत एकरूपता वा समाक्षरिक गति यतिका आधारमा यसप्रकारका छन्दहरूको निर्माण हुने गर्दछ । यी लोकछन्दहरू लोकगीतमा मात्र नभएर कविताहरूमा पनि प्रशस्त मात्रामा प्रयोग हुन्छन् ।</p>
+                </div>
+                
+                <div>
+                  <p className="font-semibold mb-2">घ) मुक्त छन्द :</p>
+                  <p>कुनै पनि छन्दमा नबाँधिएको गद्य कविताको लयलाई 'मुक्त छन्द' भनिन्छ । यो कविताको स्वतन्त्र लय हो तापनि यो कथा, निबन्ध, समाचार, प्रतिवेदन आदिमा प्रयोग हुने गद्यजस्तो नभएर आन्तरिक सङ्गीत चेतनायुक्त हुन्छ ।</p>
+                </div>
+                
+                <div>
+                  <p className="font-semibold mb-2">ङ) बहर :</p>
+                  <p>गजलमा प्रयोग हुने फारसी छन्दलाई बहर भनिन्छ । यसमा पनि संस्कृतका शास्त्रीय छन्दको जस्तै विशिष्ट अनुशासन व्यवस्था हुन्छ । संस्कृतमा यमाता, माताराजस्ता सूत्रहरूका आधारमा गणहरूको निर्धारण गरी शास्त्रीय छन्दहरूको निर्माण गरिन्छ भने फारसीमा फऊलुन्, मफाईलुन्जस्ता रुक्नहरूका आधारमा बहरहरूको निर्माण गरिन्छ ।</p>
+                </div>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* Definition and Etymology */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="card">
-              <h3 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">
-                शब्द व्युत्पत्ति
-              </h3>
-              <p className="text-parchment-700 font-devanagari leading-relaxed mb-4">
-                छन्दस् शब्द 'छद' धातुबाट बनेको छ। यसको धातुगत व्युत्पत्तिमूलक अर्थ हुन्छ - 
-                'जो आफ्नो इच्छाले चल्छ'। अत: छन्द शब्दको मूलमा गतिको भाव हुन्छ।
-              </p>
-              <p className="text-parchment-700 font-devanagari leading-relaxed">
-                <strong>परिभाषा:</strong> जब वर्णहरू या मात्राहरूको नियमित संख्याको विन्यासबाट 
-                यदि आह्लाद पैदा हुन्छ, तब यस्तोलाई छन्द भनिन्छ।
-              </p>
-              <p className="text-parchment-600 font-devanagari text-sm mt-4 italic">
-                नेपाली बृहत् शब्दकोशमा छन्दलाई "यति, गति र लय मिलेको वर्ण, मात्रा आदिको गणनाअनुसार 
-                पद्यात्मक रचना गरिने कुनै निश्चित रूप, त्यसरी गठन हुने विभिन्न किसिमका विशिष्ट वाक्य" 
-                भनेर परिभाषित गरिएको छ।
-              </p>
+          {/* १.४. आचार्य पिङ्गल र उनको 'पिङ्गलच्छन्दसूत्र'को आगमन */}
+          <section className="card">
+            <h3 className="text-xl font-bold text-saffron-700 mb-4 font-devanagari">१.४. आचार्य पिङ्गल र उनको 'पिङ्गलच्छन्दसूत्र'को आगमन</h3>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>लौकिक छन्दको सिद्धान्त निर्माण गर्ने सबैभन्दा पहिलो व्यक्ति आचार्य पिङ्गल हुन् । उनलाई पिङ्गलाचार्य, पिङ्गलमुनि वा पिङ्गलनाग पनि भनेको पाइन्छ । पटनाको राजसभामा बारम्बार शास्त्रार्थ वा शास्त्रकारहरूको परीक्षा हुने गथ्र्यो । त्यस समयमा प्रत्येक वर्ष पाणिनि, पिङ्गल, वररुचि र पतञ्जलिहरू आउने गर्थे भन्ने किंवदन्ती पाइन्छ । यसका आधारमा पिङ्गल पाणिनिका समकक्षी वा नाताले भाइ थिए भन्ने भनाइ पनि पाइन्छ ।</p>
+              <p>छन्दशास्त्रका प्रथम निर्माता पिङ्गलको कृतिलाई पिङ्गलच्छन्दसूत्र भनिन्छ । उनले ह्रस्वलाई 'लघु' भनी त्यसलाई सङ्केत गर्न (।) चिह्न र दीर्घलाई 'गुरु' भनी त्यसलाई सङ्केत गर्न (ऽ) चिह्नको प्रयोग गरेका छन् । यिनै लघु र गुरुलाई यमाताराजभानसलगा सूत्रमा समावेश गरेर त्यसबाट प्रत्येक तीन तीन अक्षर छुट्याउँदै र एक अक्षर निकाल्दै य, म, त, र, ज, भ, न, स गरी आठओटा गणहरू निर्माण गर्ने विधि तय गरिदिएका छन् ।</p>
             </div>
+          </section>
 
-            <div className="card">
-              <h3 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">
-                इतिहास
-              </h3>
-              <p className="text-parchment-700 font-devanagari leading-relaxed mb-4">
-                छन्दको सर्वप्रथम उल्लेख <strong>ऋग्वेद</strong>मा गरिएको छ। यदि गद्यको नियम 
-                व्याकरण हो भने पद्यको नियम <strong>छन्दशास्त्र</strong> हो।
-              </p>
-              <p className="text-parchment-700 font-devanagari leading-relaxed">
-                क्रौञ्च दम्पती (कर्याङकुरुङको जोडी) मध्ये एउटालाई व्याधाले मारेको दृश्यबाट पीडित 
-                महर्षि वाल्मीकिका मुखबाट लौकिक संस्कृत पद्यका रुपमा अचानक निस्किएको श्लोकलाई 
-                पहिलो पद्य मानिएको छ भने लौकिक संस्कृत साहित्यमा प्रयुक्त प्रथम छन्दको उपमा पनि 
-                <strong> अनुष्टुप् छन्द</strong>ले पाएको छ।
-              </p>
-              <div className="mt-4 p-4 bg-saffron-100 rounded-lg">
-                <p className="text-saffron-900 font-devanagari font-semibold italic">
-                  "मा निषाद ! प्रतिष्ठात्वमगम: शाश्वती: समा: ।<br/>
-                  यत्क्रौञ्चमिथुनादेकमवधी: काममोहितम् ।।"
-                </p>
-                <p className="text-saffron-700 font-devanagari text-sm mt-2">
-                  — वाल्मीकि रामायण, बालकाण्ड, २:१५
-                </p>
+          {/* १.५. छन्दसम्बन्धी कृति र सङ्ख्यात्मक विविधता */}
+          <section className="card">
+            <h3 className="text-xl font-bold text-saffron-700 mb-4 font-devanagari">१.५. छन्दसम्बन्धी कृति र सङ्ख्यात्मक विविधता</h3>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>वैदिक साहित्यमा गायत्री, त्रिष्टुप्, जगति, अनुष्टुप्, पङ्क्ति, बृहती, उष्णिक गरी सात छन्दको प्रयोग पाइन्छ भने लौकिक साहित्यमा अनेकाँै छन्दको उल्लेख पाइन्छ । पिङ्गलाचार्यदेखि अहिलेसम्मका छन्दविद्हरूले चर्चा गरेका छन्दको सङ्ख्या यति नै छ भनेर किटान गर्न सकिँदैन ।</p>
+              <p>छन्दशास्त्रको मूल ग्रन्थ पिङ्गलच्छन्दसूत्र नै हो तर पछि विभिन्न विद्वान्हरूले त्यसको टीका लेख्ने क्रममा आआफ्नै मान्यताहरू स्थापना गरेका छन् । भट्ट हलायुध, यादवप्रकाश, आचार्य भाष्कर राय आदि विद्वान्हरूले केही पिङ्गलच्छन्दसूत्रकै टीका गरेका र केही त्यही कृतिमा आधारित भएर लेखेका धेरै छन्दसिद्धान्तका कृतिहरू प्रकाशन गरे । यसपछि पनि जयदेवद्वारा लिखित जयदेवच्छन्दः, जयकीर्तिद्वारा लिखित छन्दोऽनुशासन, केदार भट्टद्वारा लिखित वृत्तरत्नाकर, क्षेमेन्द्रद्वारा लिखित सुवृत्ततिलक, कालिदासद्वारा लिखित श्रुतबोध, गङ्गादासद्वारा लिखित छन्दोमञ्जरी आदि कृतिहरू प्रकाशित भएका छन् ।</p>
+            </div>
+          </section>
+
+          {/* २. नेपाली भूमिमा संस्कृत छन्दको प्रवर्तन र प्रयोगको थालनी */}
+          <section className="card bg-gradient-to-br from-sandalwood-50 to-parchment-50">
+            <h2 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">२. नेपाली भूमिमा संस्कृत छन्दको प्रवर्तन र प्रयोगको थालनी</h2>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>सिङ्गो भारतवर्षमा नेपाल मात्र एउटा त्यस्तो देश हो, जो प्राचीन कालदेखि नै आफ्नै नामले परिचित छ । जतिबेला भारत आफ्नो नामले परिचित थिएन, त्यतिबेला पनि नेपाल देश थियो । भारतवर्षे, भरत खण्डे, आर्यावर्तन्तरैक नेपाल देशे भन्ने भनाइले यही कुराको पुष्टि गरेको छ ।</p>
+              <p>नेपाली भूमिमा संस्कृत छन्दशास्त्रको प्रभाव र प्रयोगसम्बन्धी औपचारिक तथ्यको खोजी गर्ने हो भने काठमाडौँ उपत्यकाको प्राचीन इतिहासलाई केलाउनुपर्ने देखिन्छ । लिच्छवी काल (४५७—८०७) मा नेपालको बोलीचालीको भाषा नै संस्कृत थियो । त्यसकारण लिच्छवी कालीन अभिलेखहरूमा संस्कृत छन्दको प्रयोग भएको पाइएको छ । हालसम्म प्राप्त प्रमाणअनुसार शाके ३८९ लेखिएको अर्थात् विक्रमको पाँचौँ शताब्दीको शिलालेखमा रहेको स्रग्धरा छन्दको संस्कृत श्लोक नै यहाँ सिर्जना भएको पहिलो कविता मानिन्छ ।</p>
+            </div>
+          </section>
+
+          {/* ३. नेपाली कवितामा शास्त्रीय छन्द प्रयोगको परम्परा */}
+          <section className="card">
+            <h2 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">३. नेपाली कवितामा शास्त्रीय छन्द प्रयोगको परम्परा</h2>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>नेपाली कविताको प्रवर्तन नै लोकजीवनमा अनादि कालदेखि प्रचलनमा आएका लोकगीत, लोकगाथा आदिको पृष्ठभूमिमा भएको हो । यसकारण लयसँगको नेपाली कविताको नाता प्रारम्भमा नै जोडिएको छ । नेपाली छन्दकविताको यति लामो इतिहासलाई कालक्रमिक रूपमा समीक्षा गर्दा निम्नलिखित पाँच चरणमा राखेर हेर्न सकिन्छ ।</p>
+              
+              <div className="space-y-6 mt-6">
+                <div>
+                  <h4 className="text-lg font-semibold text-saffron-800 mb-2">३.१ प्रवर्तन काल</h4>
+                  <p>नेपाली कविताको इतिहासमा शास्त्रीय छन्दको विशिष्ट स्थान छ । हालसम्मको खोजीअनुसार वि.सं. १८२६ मा सुवानन्द दासद्वारा लिखित 'पृथ्वीनारायण' शीर्षकको कवितालाई नेपाली कविताको पहिलो लिखित रूप मानिन्छ । तर प्रा. मोहनप्रसाद खनालको खोजीबाट प्राप्त सुवानन्द दासभन्दा चार वर्ष अगाडिको महाकाव्य नै प्रकाशनमा आएको छ । पर्वतका राजा मलय बमका छोरा कवि रमेश मल्लद्वारा लिखित 'मदनदीपिका' महाकाव्य वि.सं. १८२२ मा लेखिएको कुराको स्पष्ट उल्लेख कवि स्वयम्ले गरेको र त्यसभन्दा अगाडि नै १८१८ तिर उनैले फुटकर कविता लेखिसकेको तथ्य फेला परेको हुनाले नेपाली कविताको इतिहास अझै एक दशक पुरानो बन्न पुगेको देखिन्छ ।</p>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-saffron-800 mb-2">३.२ विकास काल</h4>
+                  <p>नेपाली कविताको प्राथमिक काल (१८२६–१९४०) को वीरधारा (१८२६–१८७१) र भक्तिधारा (१८७२–१९४०) को कृष्ण भक्तिधारापछि रामभक्ति धाराको नेतृत्व गर्दै आदिकवि भानुभक्त आचार्यको सिर्जनात्मक आगमन (१९९० देखि) भयो । भानुभक्त आचार्यको आगमनसँगै शास्त्रीय छन्द प्रयोगको परम्परामा अप्रत्यासित परिवर्तन भयो र विकास कालको थालनी भयो । उनले रामायणका माध्यमबाट शास्त्रीय छन्दलाई नेपाली जनजिब्रोसम्म नै पु¥याउने काम गरे ।</p>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-saffron-800 mb-2">३.३ उत्कर्ष काल</h4>
+                  <p>नेपाली कवितामा कविशविरोमणि लेखनाथ पौड्यालको सशक्त आगमन भएपछि शास्त्रीय छन्दको प्रयोगमा उत्कर्षता देखाप¥यो । नेपाली कवितामा ऋतुविचार (१९७३) को आगमनसँगै नेपाली कविता वा काव्यमा देखापरेको शास्त्रीयतावादी परिष्कारवादी धारामा छन्दकविताकै वर्चस्व रह्यो ।</p>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-saffron-800 mb-2">३.४ सङ्क्रमण काल</h4>
+                  <p>वि.सं. २०१७ को रूपरेखा पत्रिकामा कवि मोहन कोइरालाको 'घाइते युग' कविता प्रकाशित भएपछि नेपाली छन्दकविता परम्परामा सङ्क्रमण कालको थालनी भएको हो । यसपछि उक्त कविताको उद्घोषणलाई बुझेर वा नबुझेर अनुसरण गर्ने एउटा ठुलो जमात नै देखा प¥यो, जसका अगाडि छन्दकविताले निरीह बनेर बस्नुप¥यो ।</p>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-saffron-800 mb-2">३.५ पुनर्जागरण काल</h4>
+                  <p>छन्दबाट धेरै कविहरू विमुख भइरहेका बेलामा पनि माधव धिमिरे, केवलपुरे किसान, युद्धप्रसाद मिश्र, भरतराज पन्त, भरतराज मन्थलीय, भानुभक्त पोखरेल, कमलमणि दीक्षित, रमेश खकुरेल, मुकुन्दशरण उपाध्याय जस्ता कविहरूले आफ्नो बाटो छाडेनन् । २०४६ को राजनीतिक परिवर्तनपछि प्राप्त प्रस्तुतिगत स्वतन्त्रताको प्रभाव छन्दमा पनि बिस्तारै पर्न थाल्यो । २०४९ मा स्नातकोत्तरको सिर्जनात्मक लेखनअन्तर्गत पहिलोपटक नेपालीमा महाकाव्य लेखियो । कवि रामप्रसाद ज्ञवालीद्वारा सिर्जनात्मक लेखनका लागि लिखित औँसीका फूलहरू महाकाव्य पूर्णतः शास्त्रीय छन्दमा रचिएको छ ।</p>
+                </div>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* Varnika Chhanda - Gana Table - वर्णिक छन्दको गण तालिका */}
-          <div className="card">
-            <h3 className="text-2xl font-bold text-saffron-700 mb-6 font-devanagari text-center">
-              वर्णको परिचय तथा वार्णिक छन्दका नियमहरू (गण)
-            </h3>
-            <div className="overflow-x-auto -mx-4 sm:mx-0">
-              <div className="inline-block min-w-full align-middle">
-                <table className="min-w-full border-collapse border border-parchment-300 text-sm sm:text-base">
-                  <thead>
-                    <tr className="bg-saffron-200">
-                      <th className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-left font-devanagari font-semibold text-xs sm:text-sm">क्रम</th>
-                      <th className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-left font-devanagari font-semibold text-xs sm:text-sm">सूत्र</th>
-                      <th className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-left font-devanagari font-semibold text-xs sm:text-sm">सङ्केत</th>
-                      <th className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-left font-devanagari font-semibold text-xs sm:text-sm">गण</th>
-                      <th className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-left font-devanagari font-semibold text-xs sm:text-sm">उदाहरण</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-parchment-700 font-devanagari">
-                  <tr>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">१)</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">यमाता</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">ISS</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">'य'</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">कसैमा, बिहानी, खटाई, पुरानो</td>
-                  </tr>
-                  <tr className="bg-parchment-50">
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">२)</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">मातारा</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">SSS</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">'म'</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">देखाए, नेपाली, उत्साही</td>
-                  </tr>
-                  <tr>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">३)</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">ताराज</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">SSI</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">'त'</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">सौन्दर्य, सच्चाइ, उत्थान</td>
-                  </tr>
-                  <tr className="bg-parchment-50">
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">४)</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">राजभा</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">SIS</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">'र'</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">कल्पना, सम्झना, दृष्टिले</td>
-                  </tr>
-                  <tr>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">५)</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">जभान</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">ISI</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">'ज'</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">अनेक, बजार, बिहान, लिएर</td>
-                  </tr>
-                  <tr className="bg-parchment-50">
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">६)</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">भानस</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">SII</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">'भ'</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">मानव, बन्दुक, बञ्चित</td>
-                  </tr>
-                  <tr>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">७)</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">नसल</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">III</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">'न'</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">कलम, तिलक, रसिक, दमन</td>
-                  </tr>
-                  <tr className="bg-parchment-50">
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">८)</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">सलगा</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">IIS</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">'स'</td>
-                    <td className="border border-parchment-300 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">रसुवा, कविता, अगुवा</td>
-                  </tr>
-                </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-parchment-600 font-devanagari mt-4 px-4 sm:px-0">
-                S = लघु (Short), I = गुरू (Long)
-              </p>
+          {/* ४. नेपाली कवितामा संस्कृत छन्दशास्त्रको प्रयोगका धनात्मक पक्षहरू */}
+          <section className="card bg-gradient-to-br from-saffron-50 to-sandalwood-50">
+            <h2 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">४. नेपाली कवितामा संस्कृत छन्दशास्त्रको प्रयोगका धनात्मक पक्षहरू</h2>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>नेपाली कवितामा संस्कृत छन्दको प्रयोगसम्बन्धी उल्लिखित कालक्रमिक चर्चाबाट यसका लागि गौरवशाली साक्ष्यहरू फेला पर्दछन् । यस अर्थमा उल्लिखित पाँच चरणमा देखापरेका सकारात्मक पक्षहरू नै शास्त्रीय छन्द प्रयोगका धनात्मक पक्षका द्योतक हुन् ।</p>
+              <p>संस्कृत छन्दशास्त्रको प्रयोगका दृष्टिले उल्लिखित पुनर्जागरण काल साँच्चै उल्लेखनीय बनेको छ । यस दुई दशकमा नेपाली छन्दकविताको इतिहासमा विगतमा कहिल्यै हुन नसकेका कामहरू भएका छन् । जसले गर्दा वर्तमानमा नेपाली कवितामा संस्कृत छन्दहरूको प्रयोगले एउटा अद्भुत सफलता प्राप्त गरेको छ ।</p>
             </div>
-          </div>
+          </section>
 
-          {/* Chhanda Classification */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="card">
-              <h3 className="text-xl font-bold text-saffron-700 mb-4 font-devanagari">
-                मात्रा र वर्णको आधारमा
-              </h3>
-              <ul className="space-y-2 text-parchment-700 font-devanagari">
-                <li>• <strong>सम:</strong> सबै चरणहरूमा समान</li>
-                <li>• <strong>विषम:</strong> चरणहरूमा फरक</li>
-                <li>• <strong>अर्धसम:</strong> १/३ र २/४ समान</li>
-                <li>• <strong>दंडक:</strong> बहुसंख्यक वर्ण</li>
-              </ul>
+          {/* ५. नेपाली कवितामा संस्कृत छन्दशास्त्र प्रयोगका ऋणात्मक पक्षहरू */}
+          <section className="card">
+            <h2 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">५. नेपाली कवितामा संस्कृत छन्दशास्त्र प्रयोगका ऋणात्मक पक्षहरू</h2>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>नेपाली कवितामा संस्कृत का शास्त्रीय छन्द प्रयोगका धनात्मक पक्षहरू जति छन् त्यति नै यसका ऋणात्मक पक्षहरू पनि छन् । छन्दलाई प्रयोगका लागि प्रयोग मात्र नभएर युगीन सिर्जनाको द्योतक बनाउनका लागि यसमा अझै केही कामहरू हुनुपर्ने देखिन्छ ।</p>
+              <p>विगत दुई दशकमा शास्त्रीय छन्दले जति प्रगति ग¥यो, त्यति नेपाली साहित्यको कुनै कालखण्डमा भएको पाइँदैन तापनि यस क्षेत्रमा अझै निम्नलिखित चुनौतीहरू बाँकी नै छन्—</p>
+              <ol className="list-decimal list-inside space-y-2 ml-4 mt-4">
+                <li>अझै पनि छन्दलाई पुराण, धर्मशास्त्र वा कर्मकाण्डसँग जोडेर केवल ब्राह्मण जातिको अभिव्यक्तिको माध्यम सम्झिने परम्परा यथावत् छ ।</li>
+                <li>छन्दमा लामो समयसम्म त्याग र तपस्या गरिसकेका कविहरूले यसलाई आफूमा मात्र सीमित नगरेर युवापुस्तामा विस्तार गर्नुपर्छ ।</li>
+                <li>'अपि मास मसं कुर्यात् छन्दोभङ्गं नकारयेत्' भन्ने संस्कृतको उक्तिलाई आदर्श मानेर मनलागी वर्णविन्यासको प्रयोग गर्नाले र शब्दलाई जथाभावी भाँचकुँच वा तोडफोड गरेर प्रस्तुत गरिदिनाले छन्दकविहरूले विभिन्न आरोपको सामना गर्नुपरेको हो ।</li>
+                <li>छन्दमा कविता लेख्ने वा सस्वर वाचन गर्ने व्यक्तिलाई कि त संस्कृत पढेको कि त ऐच्छिक नेपाली पढेको भन्ने अनुमान लगाउने गरिन्छ ।</li>
+                <li>गणमा शब्द भर्नासाथ छन्दकविता तयार भएको भ्रम धेरैमा पर्ने गरेको छ ।</li>
+                <li>नेपाली कविताको पछिल्लो चरणमा बढ्दै गएको नयाँ छन्द निर्माणको मोह छन्दकविताका लागि जति फलदायी छ त्यति नै घातक बन्ने सम्भावना देखिन्छ ।</li>
+              </ol>
             </div>
+          </section>
 
-            <div className="card">
-              <h3 className="text-xl font-bold text-saffron-700 mb-4 font-devanagari">
-                स्वतन्त्र/मिश्रित
-              </h3>
-              <ul className="space-y-2 text-parchment-700 font-devanagari">
-                <li>• <strong>स्वतन्त्र:</strong> एकै छन्द नियम</li>
-                <li>• <strong>मिश्रित:</strong> २ छन्द मिलाइएको</li>
-                <li>• <strong>उदाहरण:</strong> कुंडलिया (दोहा + रोला)</li>
-              </ul>
+          {/* ६. नेपाली कवितामा संस्कृत छन्दशास्त्र प्रयोग : अपेक्षित भविष्य */}
+          <section className="card bg-gradient-to-br from-sandalwood-50 to-parchment-50">
+            <h2 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">६. नेपाली कवितामा संस्कृत छन्दशास्त्र प्रयोग : अपेक्षित भविष्य</h2>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>आज विश्वमा बोलिने लगभग सात हजार भाषाहरूमा नेपाली भाषा मात्र त्यस्तो भाषा हो, जसमा जस्तोसुकै छन्दमा अभिव्यक्ति दिन सकिन्छ । अति छोटो, अति लामो, सबै ह्रस्व, सबै दीर्घ जस्तोसुकै छन्द भए पनि नेपाली भाषाले त्यसको गणमा खेल्न सक्छ र त्यसबाट सूक्ति निर्माण गर्न सक्छ ।</p>
+              <p>संस्कृत छन्दशास्त्रमा पाँचओटा 'न' गण र अन्त्यमा एउटा ह्रस्व हुने सोह्र अक्षरको एउटा छन्द छ । त्यसलाई 'अचलधृति' भनिन्छ । यस छन्दमा सबै ह्रस्व अक्षर मात्र हुन्छन् । त्यसमा एउटा पनि दीर्घ अक्षर प्रयोग गर्न पाइँदैन । यसप्रकारको क्षमता, सहज प्रयोग र सरलता विश्वका अन्य कुनै पनि भाषामा पाउन मुस्किल छ त्यसैले भविष्यमा संस्कृत छन्दशास्त्रलाई नेपाली भाषाले मात्र बचाउने कुरा निर्विवाद बन्दै गएको छ ।</p>
+              <p>नेपाली कविताले २५० वर्षको यात्रा पूरा गरिसक्दा यसले संस्कृत छन्दशास्त्रलाई आफ्नो मात्र निजी सम्पत्तिका रूपमा स्थापित गरिसकेको छ । वर्तमानमा नेपाली भाषा मात्र एउटा त्यस्तो भाषा हो जसमा जुनसुकै छन्द प्रयोग हुन सक्छ । त्यसैले संस्कृत छन्दशास्त्रको गरिमालाई युगौँयुगसम्म जीवित राख्न सक्ने हुनाले नेपाली कविताको सर्वोच्चताका बारेमा एउटा छुट्टै योजनाका साथ अनुसन्धानको थालनी हुनुपर्छ र छन्दशास्त्रीय मान्यताअनुकूल कविता सिर्जनाको वैभवलाई विश्वसाहित्यमा परिचित गराउनका लागि यस तथ्यलाई सप्रमाण गिनिज बुक अफ वल्र्ड रेकर्डमा दर्ता गराउनुपर्छ ।</p>
             </div>
+          </section>
 
-            <div className="card">
-              <h3 className="text-xl font-bold text-saffron-700 mb-4 font-devanagari">
-                पिङ्गलको आधारमा
-              </h3>
-              <ul className="space-y-2 text-parchment-700 font-devanagari">
-                <li>• <strong>वार्णिक:</strong> वर्ण गणना</li>
-                <li>• <strong>मात्रिक:</strong> मात्रा गणना</li>
-                <li>• <strong>वर्णमात्रा:</strong> दुवै मिलाएर</li>
-              </ul>
+          {/* ७. निष्कर्ष */}
+          <section className="card">
+            <h2 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">७. निष्कर्ष</h2>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-3 text-base">
+              <p>लय कविताका लागि एक अपरिहार्य तत्त्व हो । यसैलाई छन्द भनिन्छ । अन्य विधाबाट कवितालाई अलग गर्ने र कवितालाई कविताकै स्वरूप प्रदान गर्ने कार्यमा छन्दको विशेष भूमिका रहेको छ ।</p>
+              <p>भारतवर्षको उत्तरी पहाडी भूमिमा सिर्जना भएको मान्न सकिने संस्कृत छन्दशास्त्रले सुरु सुरुमा विशाल भारतीय भूमिमा आफ्नो परिचय निर्माण गरे पनि लेख्य परम्परामा लिच्छवी कालमा संस्कृत भाषाकै माध्यमबाट र सोह्रौँ शताब्दीको अन्त्यतिर नेवारी भाषाका माध्यमबाट नेपाली भूमिमा औपचारिक प्रवेश पाएको तथ्य फेला पर्दछ ।</p>
+              <p>अन्त्यमा, विश्वका अत्यन्त सम्पन्न भाषाहरूमा पनि कविताको लयविधानमा सीमितता छ । छन्दप्रयोगका दृष्टिले संस्कृत भाषा नै विश्वको सर्वोच्च भाषा हो तर संस्कृत भाषा विगतको वैभवले मात्र वर्तमानमा बाँचेको छ । छन्दशास्त्रीय मान्यता एकातिर भए पनि प्रयोगका दृष्टिले नेपाली भाषाले संस्कृत भाषालाई पनि उच्छिन्ने अभिलक्षणहरू देखिइसकेका छन् । वर्तमानमा नेपाली भाषा मात्र एउटा त्यस्तो भाषा हो जसमा जुनसुकै छन्द प्रयोग हुन सक्छ ।</p>
+              <p className="font-semibold mt-4">त्यसैले संस्कृत छन्दशास्त्रको गरिमालाई युगौँयुगसम्म जीवित राख्न सक्ने हुनाले नेपाली कविताको सर्वोच्चताका बारेमा एउटा छुट्टै योजनाका साथ अनुसन्धानको थालनी हुनुपर्छ र छन्दशास्त्रीय मान्यताअनुकूल कविता सिर्जनाको वैभवलाई विश्वसाहित्यमा परिचित गराउनका लागि यस तथ्यलाई सप्रमाण गिनिज बुक अफ वल्र्ड रेकर्डमा दर्ता गराउनुपर्छ । अबको युगमा छन्दको जीवन नेपाली भाषासँग जोडिएको छ त्यसैले यसको संरक्षण, संवद्र्धन र विश्वव्यापीकरणका लागि व्यक्तिगत वा संस्थागत जुनसुकै रूपमा पनि समर्पित भएर लाग्नु नेपाली कवि तथा कविताप्रेमीहरूको प्रथम दायित्व हो ।</p>
             </div>
-          </div>
+          </section>
 
-          {/* Chhanda Types List - छन्दका प्रकारहरूको सूची */}
-          <div className="card">
-            <h3 className="text-2xl font-bold text-saffron-700 mb-6 font-devanagari text-center">
-              छन्दको प्रकारहरू (पिङ्गलको आधारमा)
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-parchment-700 font-devanagari">
-              <div>• अनुष्टुप छन्द</div>
-              <div>• विद्युन्माला छन्द</div>
-              <div>• इन्द्रवज्रा छन्द</div>
-              <div>• उपेन्द्रवज्रा छन्द</div>
-              <div>• उपजाति छन्द</div>
-              <div>• वंशस्थ छन्द</div>
-              <div>• स्रग्विणी छन्द</div>
-              <div>• स्वागता छन्द</div>
-              <div>• भुजङ्गप्रयात छन्द</div>
-              <div>• तोटक छन्द</div>
-              <div>• द्रुतविलम्बित छन्द</div>
-              <div>• वसन्ततिलका छन्द</div>
-              <div>• मालिनी छन्द</div>
-              <div>• पञ्चचामर छन्द</div>
-              <div>• मन्दाक्रान्ता छन्द</div>
-              <div>• चित्रवतीहरिणी छन्द</div>
-              <div>• चित्रलेखा छन्द</div>
-              <div>• शिखरिणी छन्द</div>
-              <div>• शार्दूलविक्रीडित छन्द</div>
-              <div>• स्रग्धरा छन्द</div>
-              <div>• आर्या छन्द</div>
-              <div>• शालिनी छन्द</div>
-              <div>• ललिता छन्द</div>
-              <div>• पृथ्वी छन्द</div>
-              <div>• मञ्जुभाषिणी छन्द</div>
+          {/* प्रमुख सन्दर्भ सामग्री */}
+          <section className="card bg-gradient-to-br from-saffron-50 to-sandalwood-50">
+            <h2 className="text-2xl font-bold text-saffron-700 mb-4 font-devanagari">प्रमुख सन्दर्भ सामग्री</h2>
+            <div className="text-parchment-800 font-devanagari leading-relaxed space-y-2 text-sm">
+              <p>उपाध्याय केशवप्रसाद, २०४२, साहित्य प्रकाश, पाँ.सं., काठमाडौँ : साझा प्रकाशन ।</p>
+              <p>उपाध्याय केशवप्रसाद, २०४८, पूर्वीय साहित्य सिद्धान्त, दो.सं., काठमाडौँ : साझा प्रकाशन ।</p>
+              <p>ओझा घनेन्द्र (सम्पा.), २०६२, बहरमाला, काठमाडौँ : हजुरको प्रकाशन ।</p>
+              <p>गौतम, लक्ष्मणप्रसाद, २०६६, समकालीन नेपाली कविताका प्रवृत्ति, काठमाडौँ : पैरवी प्रकाशन ।</p>
+              <p>ज्ञवाली, रामप्रसाद, २०६७, नेपाली महाकाव्यमा वर्गीयता र वर्गद्वन्द्व, अप्रकाशित विद्यावारिधि शोध प्रबन्ध, त्रि. वि. कीर्तिपुर ।</p>
+              <p>नेपाल, देवी, २०७५, छन्दपराग, चौ.सं., काठमाडौँ : ऐरावती प्रकाशन ।</p>
+              <p>नेपाल, देवी, २०६८, काव्य समालोचना, काठमाडौँ : ऐरावती प्रकाशन ।</p>
+              <p>भट्ट, केदार, सन् १९७५, वृत्तरत्नाकरम्, वाराणसी : मोतीलाल बनारसीदास ।</p>
+              <p>भट्टराई, घटराज, २०५६, नेपाली साहित्यको ऐतिहासिक रूपरेखा, ललितपुर : साझा प्रकाशन ।</p>
+              <p>रिसाल, राममणि, २०५८, नेपाली काव्य र कवि पाँ.सं., ललितपुर : साझा प्रकाशन ।</p>
+              <p>वैद्य, जनकलाल, २०५९, नेपाल भाषाया प्राचीन काव्य सिर्जना, काठमाडौँ : नेराप्र ।</p>
+              <p>विश्वनाथ, सन् १९८८, साहित्य दर्पण, सा.सं. वाराणसी : चौखम्बा सुरभारती ।</p>
+              <p>श्रेष्ठ, दयाराम, र मोहनराज शर्मा, २०४९, नेपाली साहित्यको सङ्क्षिप्त इतिहास, चौ.सं. काठमाडौँ : साझा प्रकाशन ।</p>
             </div>
-          </div>
-
-          {/* Chhanda Anga (Parts) */}
-          <div className="card bg-gradient-to-br from-sandalwood-50 to-parchment-50">
-            <h3 className="text-2xl font-bold text-saffron-700 mb-6 font-devanagari text-center">
-              छन्दको अङ्गहरू
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-parchment-700 font-devanagari">
-              <div>
-                <p className="mb-2"><strong>चरण:</strong> छन्दको प्रत्येक पंक्तिलाई चरण, पाउ वा पद भनिन्छ।</p>
-                <p className="mb-2"><strong>वर्ण:</strong> एकै स्वर हुने ध्वनिलाई वर्ण भनिन्छ।</p>
-                <p className="mb-2"><strong>मात्रा:</strong> कुनै वर्णको उच्चारण समयलाई मात्रा भनिन्छ।</p>
-                <p><strong>संख्या र क्रम:</strong> वर्ण र मात्राहरूको गणना र स्थान निर्धारण।</p>
-              </div>
-              <div>
-                <p className="mb-2"><strong>गण:</strong> वार्णिक छन्दसँग सम्बन्धित (य, म, त, र, ज, भ, न, स)।</p>
-                <p className="mb-2"><strong>गति:</strong> छन्दलाई पढ्दा लिने समयलाई गति भनिन्छ।</p>
-                <p className="mb-2"><strong>यति:</strong> छन्दमा स्वास लिन रोकिने ठाउँलाई यति वा विराम भनिन्छ।</p>
-                <p><strong>तुक:</strong> एउटै उच्चारण हुने शब्दहरूको प्रयोगलाई तुक भनिन्छ।</p>
-              </div>
-            </div>
-          </div>
-
+          </section>
         </div>
       </div>
     </div>

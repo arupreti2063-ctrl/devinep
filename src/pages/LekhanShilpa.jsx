@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { collection, query, orderBy, getDocs } from 'firebase/firestore'
 import { db } from '../config/firebase'
 import LikeButton from '../components/LikeButton'
 import CommentsSection from '../components/CommentsSection'
 import AudioPlayer from '../components/AudioPlayer'
+import { getHeroImage } from '../utils/heroImages'
 // Images import गर्ने - deployment को लागि src folder मा राखिएको
 import headerImage from '../assets/images/image.png'
 import backgroundImage from '../assets/images/image-copy.png'
 
 const LekhanShilpa = () => {
+  const location = useLocation()
+  const heroImage = getHeroImage(location.pathname)
   const [articles, setArticles] = useState([])
   const [poems, setPoems] = useState([])
   const [selectedArticle, setSelectedArticle] = useState(null)
@@ -134,22 +138,33 @@ const LekhanShilpa = () => {
   return (
     <div className="min-h-screen py-20">
       <div className="container mx-auto px-4">
-        {/* Header Section - पृष्ठको मुख्य शीर्षक */}
+        {/* Header Section with Dynamic Hero Image */}
         <div className="text-center mb-16">
           <div className="mb-8">
-            <img
-              src={headerImage}
-              alt="Lekhan-Shilpa Heading"
-              className="w-full max-w-5xl mx-auto rounded-lg shadow-2xl mb-6 object-contain"
-              onError={(e) => {
-                e.target.style.display = 'none'
-              }}
-            />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl max-w-5xl mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-b from-saffron-900/70 via-saffron-700/60 to-sandalwood-800/70 z-10"></div>
+              <img
+                src={heroImage}
+                alt="Lekhan-Shilpa Heading"
+                className="w-full h-[300px] sm:h-[400px] object-cover"
+                onError={(e) => {
+                  e.target.src = headerImage
+                  e.target.onerror = () => {
+                    e.target.style.display = 'none'
+                  }
+                }}
+              />
+              <div className="absolute inset-0 z-20 flex items-center justify-center">
+                <div className="text-center text-white px-4">
+                  <h1 className="section-title mb-4 font-devanagari text-white drop-shadow-2xl">लेखन</h1>
+                  <p className="text-xl sm:text-2xl font-devanagari mb-2 drop-shadow-lg">
+                    सिर्जना, समालोचना र साहित्यिक कर्मको ब्लग लेआउट
+                  </p>
+                  <div className="w-32 h-1 bg-white rounded-full mx-auto mt-4"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <h1 className="section-title mb-6 font-devanagari">लेखन</h1>
-          <p className="section-subtitle font-devanagari">
-          सिर्जना, समालोचना र साहित्यिक कर्मको  ब्लग लेआउट
-          </p>
           <div className="sanskrit-divider"></div>
         </div>
 

@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { collection, query, orderBy, getDocs, limit } from 'firebase/firestore'
 import { db } from '../config/firebase'
 import LikeButton from '../components/LikeButton'
 import CommentsSection from '../components/CommentsSection'
 import AudioPlayer from '../components/AudioPlayer'
+import { getHeroImage, getGalleryImages } from '../utils/heroImages'
 // Images import गर्ने - deployment को लागि src folder मा राखिएको
 import headerImage from '../assets/images/image.png'
 import backgroundImage from '../assets/images/image-copy.png'
 import profileImage from '../assets/images/pic.png'
 
 const Home = () => {
+  const location = useLocation()
+  const heroImage = getHeroImage(location.pathname)
+  const galleryImages = getGalleryImages()
   const [recentPosts, setRecentPosts] = useState([])
   const [loadingPosts, setLoadingPosts] = useState(true)
   const [selectedPost, setSelectedPost] = useState(null)
@@ -131,15 +135,19 @@ const Home = () => {
       <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-saffron-100 via-sandalwood-50 to-parchment-100 opacity-90"></div>
         <div className="absolute inset-0 mandala-bg opacity-40"></div>
-        {/* Hero Heading Image - background मा decorative image */}
+        {/* Hero Heading Image - background मा dynamic decorative image */}
         <div className="absolute inset-0 flex items-center justify-center opacity-10 sm:opacity-20">
           <img
-            src={headerImage}
+            src={heroImage}
             alt="Header Image"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
             loading="lazy"
             onError={(e) => {
-              e.target.style.display = 'none'
+              // Fallback to default header image
+              e.target.src = headerImage
+              e.target.onerror = () => {
+                e.target.style.display = 'none'
+              }
             }}
           />
         </div>
@@ -258,6 +266,48 @@ const Home = () => {
                 </p>
               </div>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Image Gallery Section - Attractive Gallery with devinepalpic images */}
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-parchment-50 via-saffron-50/30 to-sandalwood-50/30">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="section-title mb-4 font-devanagari">ग्यालेरी</h2>
+            <p className="section-subtitle font-devanagari">
+              डा. देवी नेपालका विभिन्न क्षणहरू
+            </p>
+            <div className="sanskrit-divider mx-auto"></div>
+          </div>
+          
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+              {galleryImages.map((imageSrc, index) => (
+                <div 
+                  key={index} 
+                  className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2"
+                >
+                  <div className="aspect-square bg-gradient-to-br from-saffron-100 to-sandalwood-100">
+                    <img
+                      src={imageSrc}
+                      alt={`डा. देवी नेपाल - ${index + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.style.display = 'none'
+                      }}
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                    <div className="p-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      <p className="text-sm font-devanagari font-semibold">डा. देवी नेपाल</p>
+                    </div>
+                  </div>
+                  {/* Decorative corner element */}
+                  <div className="absolute top-2 right-2 w-8 h-8 bg-saffron-500/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
